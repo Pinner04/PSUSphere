@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Organization Member{% endblock %}
+
+{% block content %}
+<div class="container mt-4 pt-5">
+    <h2>Delete Organization Member</h2>
+    <p>Are you sure you want to delete the membership of <strong>{{ orgmember.student }}</strong> from <strong>{{ orgmember.organization }}</strong> (joined on {{ orgmember.date_joined|date:"Y-m-d" }})?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+        <a href="{% url 'orgmember-list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}
