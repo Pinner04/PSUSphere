@@ -17,7 +17,7 @@
     <div class="wrapper">
         <div class="main-header">
             <div class="logo-header">
-                <a href="index.html" class="logo">
+                <a href="{% url 'home' %}" class="logo">
                     Ready Dashboard
                 </a>
                 <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
@@ -126,7 +126,16 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#"><i class="ti-settings"></i> Account Setting</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#"><i class="fa fa-power-off"></i> Logout</a>
+                                {% if user.is_authenticated %}
+                                    <form method="post" action="{% url 'logout' %}" style="margin: 0;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="dropdown-item" style="border: none; background: none; padding: 0.25rem 1.5rem; width: 100%; text-align: left; cursor: pointer;">
+                                            <i class="fa fa-power-off"></i> Logout
+                                        </button>
+                                    </form>
+                                {% else %}
+                                    <a class="dropdown-item" href="{% url 'login' %}"><i class="fa fa-sign-in"></i> Login</a>
+                                {% endif %}
                             </ul>
                             </li>
                     </ul>
@@ -171,38 +180,38 @@
                     </div>
                 </div>
                 <ul class="nav">
-                    <li class="nav-item">
-                        <a href="{% url 'home' %}">
+                    <li class="nav-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+                        <a href="{% url 'home' %}" >
                             <i class="la la-dashboard"></i>
                             <p>Dashboard</p>
                             
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="{% url 'organization-list' %}">
+                    <li class="nav-item {% if 'organization-' in request.resolver_match.url_name %}active{% endif %}">
+                        <a href="{% url 'organization-list' %}" >
                             <i class="la la-table"></i>
                             <p>Organization</p>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="{% url 'orgmember-list' %}">
+                    <li class="nav-item {% if 'orgmember-' in request.resolver_match.url_name %}active{% endif %}">
+                        <a href="{% url 'orgmember-list' %}" >
                             <i class="la la-keyboard-o"></i>
                             <p>Org. Members</p>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="{% url 'student-list' %}">  
+                    <li class="nav-item {% if 'student-' in request.resolver_match.url_name %}active{% endif %}">
+                        <a href="{% url 'student-list' %}" >  
                             <i class="la la-group"></i> 
                             <p>Student</p>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="{% url 'college-list' %}"> 
+                    <li class="nav-item {% if 'college-' in request.resolver_match.url_name %}active{% endif %}">
+                        <a href="{% url 'college-list' %}" > 
                             <i class="la la-institution"></i> 
                             <p>Colleges</p>
                         </a>
                     </li>
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a href="typography.html">
                             <i class="la la-font"></i>
                             <p>Typography</p>
